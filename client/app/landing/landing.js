@@ -3,7 +3,6 @@ var app = angular.module('mainApp.landing',[]);
 app.factory('landingFactory',function($http, $location){
 
   var searchResults = function(barName){
-
     var barData = {};
     barData.bar = {};
     barData.bar.name = barName;
@@ -28,10 +27,14 @@ app.controller('landingController',funtion($scope, $window, $location, landingFa
 
   $scope.searchResults = function() {
 
-    landingFactory.searchResults($scope.searchBoxModel).then(function(data){
+    landingFactory.searchResults($scope.searchBoxModel)
+      .then(function(data){
         $window.localStorage.setItem('barInfoObj', JSON.stringify(data));
         $location.path('/results');
-    });
+    })
+      .catch(funtion(response){
+        $location.path('/addBar/id' + $scope.searchBoxModel);
+      })
   }
 });
 
