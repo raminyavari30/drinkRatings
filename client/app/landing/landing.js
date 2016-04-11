@@ -24,7 +24,14 @@ app.factory('landingFactory',function($http, $location){
   };
 });
 
-app.controller('landingController',funtion(){
+app.controller('landingController',funtion($scope, $window, $location, landingFactory){
 
+  $scope.searchResults = function() {
+
+    landingFactory.searchResults($scope.searchBoxModel).then(function(data){
+        $window.localStorage.setItem('barInfoObj', JSON.stringify(data));
+        $location.path('/results');
+    });
+  }
 });
 
